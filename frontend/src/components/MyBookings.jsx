@@ -4,7 +4,7 @@ import { lastBookingDetails } from "../api-helpers/Api-helpers";
 
 const MyBookings = () => {
    // State to store booking details
-  const [bookingDetails, setBookingDetails] = useState(null);
+  const [bookingInfos, setBookingDetails] = useState(null);
 
    // Fetch the last booking details when the component mounts
   useEffect(() => {
@@ -21,18 +21,18 @@ const MyBookings = () => {
           My Bookings
         </h1>
         
-        {bookingDetails ? (
+        {bookingInfos ? (
            // Render booking details if available
           <div className="space-y-1">
             <div className="flex gap-2 ">
               <p className="text-lg font-semibold text-gray-800">Movie:</p>
               <p className="text-lg text-gray-700 underline font-semibold">
-                {bookingDetails.movie || "N/A"}</p> {/* Display movie name or "N/A" if not available */}
+                {bookingInfos.movie || "N/A"}</p> {/* Display movie name or "N/A" if not available */}
             </div>
             <div className="flex gap-5 ">
               <p className="text-lg font-semibold text-gray-800">Slot:</p>
               <p className="text-lg underline text-gray-700 font-semibold">
-                {bookingDetails.slot || "N/A"}</p> {/* Display time slot or "N/A" if not available */}
+                {bookingInfos.slot || "N/A"}</p> {/* Display time slot or "N/A" if not available */}
             </div>
             <div className="flex justify-between gap-2">
               <p className="text-lg font-semibold text-gray-800">Seats:</p>
@@ -41,14 +41,14 @@ const MyBookings = () => {
                   <li
                     key={index}
                     className={`text-lg text-gray-700 ${
-                      bookingDetails.seats && bookingDetails.seats[seatName] > 0
+                      bookingInfos.seats && bookingInfos.seats[seatName] > 0
                         ? "underline font-semibold"
                         : ""
                     }`}
                   >
                     {seatName}:{" "}
-                    {bookingDetails.seats && bookingDetails.seats[seatName] !== undefined
-                      ? Number(bookingDetails.seats[seatName])// Display the number of seats booked
+                    {bookingInfos.seats && bookingInfos.seats[seatName] !== undefined
+                      ? Number(bookingInfos.seats[seatName])// Display the number of seats booked
                       : "Not available"} {/* Show "Not available" if no seats booked */}
                   </li>
                 ))}
