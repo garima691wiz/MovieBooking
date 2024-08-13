@@ -1,39 +1,56 @@
-import axios from "axios";
+import axios from 'axios';
 
+// Set up the base URL for axios
+axios.defaults.baseURL = 'https://moviebooking-backend-rqa1.onrender.com';
+
+// Function to create a new booking
 export const newBooking = async (data) => {
+  try {
+    // Sending a POST request to create a new booking
+    const response = await axios.post('/bookings/', {
+      movie: data.movie,
+      slot: data.slot,
+      seats: data.seats,
+    });
 
-  // Sending a POST request to create a new booking
-  const res = await axios
-    .post("/bookings/", {
-      movie: data.movie, // Movie selected by the user
-      slot: data.slot,   // Time slot selected by the user
-      seats: data.seats, // Seats selected by the user
-  })
-    .catch((err) => console.log(err));// Log any error that occurs during the request
-
-    // Check if the response status is not 200 (indicating an error)
-  if (res.status !== 200) {
-    return console.log("Unexpected Error");// Log an error message if the status is not 200
+    // Return the response data if the request is successful
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      // Server responded with a status other than 2xx
+      console.error('Error creating booking:', error.response.data);
+    } else if (error.request) {
+      // Request was made but no response received
+      console.error('Error creating booking: No response received');
+    } else {
+      // Something else went wrong
+      console.error('Error creating booking:', error.message);
+    }
+    // Return a specific error message or null
+    return { error: 'Failed to create booking' };
   }
-
-  // Retrieve the data from the response
-  const resData = await res.data;
-  return resData; // Return the data from the response
 };
 
 // Function to fetch details of the last booking
 export const lastBookingDetails = async () => {
-  // Sending a GET request to fetch the last booking details
-   const res = await axios
-    .get("/bookings/lastbooking")
-    .catch((err) => console.log(err));// Log any error that occurs during the request
+  try {
+    // Sending a GET request to fetch the last booking details
+    const response = await axios.get('/api/booking');
 
-    // Check if the response status is not 200 (indicating an error)
-
-  if (res.status !== 200) {
-    return console.log("Unexpected error");
+    // Return the response data if the request is successful
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      // Server responded with a status other than 2xx
+      console.error('Error fetching last booking details:', error.response.data);
+    } else if (error.request) {
+      // Request was made but no response received
+      console.error('Error fetching last booking details: No response received');
+    } else {
+      // Something else went wrong
+      console.error('Error fetching last booking details:', error.message);
+    }
+    // Return a specific error message or null
+    return { error: 'Failed to fetch last booking details' };
   }
-  // Retrieve the data from the response
-  const resData = await res.data;
-  return resData;  // Return the data from the response
 };
