@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Set up the base URL for axios
-axios.defaults.baseURL = 'https://moviebooking-backend-rqa1.onrender.com';
+axios.defaults.baseURL = 'http://localhost:8080';
 
 // Function to create a new booking
 export const newBooking = async (data) => {
