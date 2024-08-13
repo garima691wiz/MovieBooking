@@ -7,7 +7,7 @@ axios.defaults.baseURL = 'http://localhost:8080';
 export const newBooking = async (data) => {
   try {
     // Sending a POST request to create a new booking
-    const response = await axios.post('/bookings/', {
+    const response = await axios.post('/api/', {
       movie: data.movie,
       slot: data.slot,
       seats: data.seats,
