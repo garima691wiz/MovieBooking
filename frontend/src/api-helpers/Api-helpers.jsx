@@ -1,22 +1,33 @@
-import axios from "axios";
+import axios from 'axios';
 
-// Set up the base URL for axios (could be done globally for all requests)
+// Set up the base URL for axios
 axios.defaults.baseURL = 'https://moviebooking-backend-rqa1.onrender.com';
 
+// Function to create a new booking
 export const newBooking = async (data) => {
   try {
     // Sending a POST request to create a new booking
-    const res = await axios.post("/bookings/", {
-      movie: data.movie, // Movie selected by the user
-      slot: data.slot,   // Time slot selected by the user
-      seats: data.seats, // Seats selected by the user
+    const response = await axios.post('/bookings/', {
+      movie: data.movie,
+      slot: data.slot,
+      seats: data.seats,
     });
 
     // Return the response data if the request is successful
-    return res.data;
-  } catch (err) {
-    console.error("Error creating booking:", err);
-    return null; // or return a specific error message
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      // Server responded with a status other than 2xx
+      console.error('Error creating booking:', error.response.data);
+    } else if (error.request) {
+      // Request was made but no response received
+      console.error('Error creating booking: No response received');
+    } else {
+      // Something else went wrong
+      console.error('Error creating booking:', error.message);
+    }
+    // Return a specific error message or null
+    return { error: 'Failed to create booking' };
   }
 };
 
@@ -24,12 +35,22 @@ export const newBooking = async (data) => {
 export const lastBookingDetails = async () => {
   try {
     // Sending a GET request to fetch the last booking details
-    const res = await axios.get("/bookings/lastbooking");
+    const response = await axios.get('/api/booking');
 
     // Return the response data if the request is successful
-    return res.data;
-  } catch (err) {
-    console.error("Error fetching last booking details:", err);
-    return null; // or return a specific error message
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      // Server responded with a status other than 2xx
+      console.error('Error fetching last booking details:', error.response.data);
+    } else if (error.request) {
+      // Request was made but no response received
+      console.error('Error fetching last booking details: No response received');
+    } else {
+      // Something else went wrong
+      console.error('Error fetching last booking details:', error.message);
+    }
+    // Return a specific error message or null
+    return { error: 'Failed to fetch last booking details' };
   }
 };
