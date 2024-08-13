@@ -24,14 +24,14 @@ app.post('/bookings', (req, res) => {
 
 //http://localhost:8080/api/booking
 // Route to fetch the last booking data
-app.get('/api/booking', (req, res) => {
+app.get('/', (req, res) => {
     res.json(bookingData); // Respond with the last booking data
 });
 
 // Root route
-app.get("/", (req, res) => {
-    res.send("Hello from the backend server!");
-});
+// app.get("/", (req, res) => {
+//     res.send("Hello from the backend server!");
+// });
 
 // Connect to MongoDB and start the server
 mongoose.connect(mongodbURI)
